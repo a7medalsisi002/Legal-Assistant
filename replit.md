@@ -1,44 +1,67 @@
-# [Project name]
+# KnowLaw – Smart Legal Assistant for Egyptian Law
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A bilingual (Arabic/English) legal-tech SaaS web app that provides AI-powered legal information for Egyptian law. Features include an AI chatbot, document analysis, contract generation, document translation, a lawyer directory, and a secure legal vault.
 
 ## Run & Operate
 
+- `pnpm --filter @workspace/knowlaw run dev` — run the frontend (port assigned by workflow)
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 18 + Vite + Tailwind CSS + Wouter (routing) + shadcn/ui
+- API: Express 5 (health check only — app uses all mock data)
+- No database — all data is mock/hardcoded state
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/knowlaw/src/` — React frontend
+- `artifacts/knowlaw/src/context/AppContext.tsx` — global language/auth state
+- `artifacts/knowlaw/src/components/Navbar.tsx` — top navigation
+- `artifacts/knowlaw/src/components/Footer.tsx` — disclaimer footer
+- `artifacts/knowlaw/src/pages/` — all page components
+- `artifacts/api-server/src/` — Express backend (health check only)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- All data is mock/hardcoded — no real backend or database needed
+- RTL/LTR support via AppContext language toggle + dir="rtl" on HTML element
+- Google Fonts "Cairo" for Arabic, "Inter" for English — must be first @import in index.css
+- Navy (#0F2044) / Gold (#C9A84C) color palette applied via CSS custom properties
+- Wouter used for routing (not react-router-dom)
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+KnowLaw has 10 pages:
+1. **Landing** (/) — hero, features, how it works, stats, testimonials
+2. **Register** (/register) — with residency + role selectors
+3. **Login** (/login)
+4. **Dashboard** (/dashboard) — quick actions, recent cases, vault, chat history
+5. **Chat** (/chat) — AI legal chatbot with citations and typing indicator
+6. **Analyze** (/analyze) — document OCR + risk assessment
+7. **Contracts** (/contracts) — 3-step contract generator
+8. **Translate** (/translate) — document + quick text translation
+9. **Lawyers** (/lawyers) — directory with search/filter + booking modal
+10. **Vault** (/vault) — document storage + cases dashboard
+11. **Admin** (/admin) — user management + system health
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Color palette: Deep navy (#0F2044) + Gold/Amber (#C9A84C) + white + light gray
+- Bilingual: English (LTR) and Arabic (RTL) with language toggle in navbar
+- All AI interactions simulated with mock data and loading indicators
+- No emojis in UI text (except specific icons: 🇪🇬, 📖, 🔒 in specified places)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Google Fonts @import MUST be the VERY FIRST line of index.css — PostCSS fails silently otherwise
+- All CSS custom properties must be set (none can remain as "red")
+- Use wouter's `<Switch>` and `<Route>` for routing — not react-router-dom
+- RTL: apply dir="rtl" to the HTML element, not just a wrapper div
+- The knowlaw workflow must be restarted after the design subagent finishes
 
 ## Pointers
 
