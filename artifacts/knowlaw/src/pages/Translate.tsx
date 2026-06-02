@@ -3,6 +3,7 @@ import { useAppContext } from "@/context/AppContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Upload, ArrowRight, Download, Save, ArrowLeftRight } from "lucide-react";
 
 type DocStep = "idle" | "loading" | "done";
